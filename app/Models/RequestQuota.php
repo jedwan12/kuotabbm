@@ -5,27 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailUser extends Model
+class RequestQuota extends Model
 {
     use HasFactory;
+    protected $table = 'request_quota';
     protected $fillable = [
-        'nip',
-        'name',
-        'position_id',
-        'business_unit_id',
-        'phone_number',
-        'detail_vehicle_id',
+        'total_request',
+        'approval1',
+        'approval2',
         'user_id',
+        'detail_vehicle_id',
     ];
-    public function position()
-        {
-            return $this->belongsTo(Position::class);
-        }
-
-    public function business_unit()
-        {
-            return $this->belongsTo(BusinessUnit::class);
-        }
 
     public function detail_vehicle()
         {
@@ -36,6 +26,4 @@ class DetailUser extends Model
         {
             return $this->belongsTo(User::class);
         }
-
-
 }

@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_active',
+        'is_ldap',
+        'role_id'
     ];
 
     /**
@@ -41,4 +44,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function detailuser()
+    {
+        return $this->hasOne(DetailUser::class);
+    }
+
+    public function log()
+    {
+        return $this->hasMany(Log::class);
+    }
+
+    public function requestquota()
+    {
+        return $this->hasMany(RequestQuota::class);
+    }
+
+    public function detailvehicle()
+        {
+            return $this->hasOne(DetailVehicle::class);
+        }
+
+    public function role()
+        {
+            return $this->belongsTo(Role::class);
+        }
+
 }

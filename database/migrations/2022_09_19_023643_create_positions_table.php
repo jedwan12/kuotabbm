@@ -13,17 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_users', function (Blueprint $table) {
+        Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('position', 20);
-            $table->date('birthdate');
-            $table->string('phone_number', 20);
-            $table->integer('total_liter');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('name', 100);
+            $table->enum('status', ['active', 'deleted'])->default('active');
             $table->timestamps();
-
         });
     }
 
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_users');
+        Schema::dropIfExists('positions');
     }
 };

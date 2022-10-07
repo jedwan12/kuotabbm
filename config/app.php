@@ -185,6 +185,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Adldap\Laravel\AdldapServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -209,6 +211,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Adldap' => Adldap\Laravel\Facades\Adldap::class
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

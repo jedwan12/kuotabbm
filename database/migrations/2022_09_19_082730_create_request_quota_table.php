@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_details', function (Blueprint $table) {
+        Schema::create('request_quota', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicle_type', 255);
-            $table->string('vehicle_plat', 20);
-            $table->string('business_unit', 255);
-            $table->string('petrol_type', 25);
+            $table->double('total_request');
+            $table->boolean('approval1')->nullable();
+            $table->boolean('approval2')->nullable();
+            $table->unsignedBigInteger('detail_vehicle_id')->nullable();
+            $table->foreign('detail_vehicle_id')->references('id')->on('detail_vehicles');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('total_request_liter');
+            $table->enum('status', ['active', 'deleted'])->default('active');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicle_details');
+        Schema::dropIfExists('request_quota');
     }
 };
