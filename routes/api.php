@@ -50,10 +50,15 @@ Route::put('logs/{id}', [LogController::class, 'edit']);
 Route::get('detail_vehicles', [DetailVehicleController::class, 'index']);
 Route::post('detail_vehicles', [DetailVehicleController::class, 'store']);
 Route::put('detail_vehicles/{id}', [DetailVehicleController::class, 'edit']);
+Route::get('detail_vehicles/{id}', [DetailVehicleController::class, 'get_data_by_id']);
+Route::get('list_detail_vehicles/{id}', [DetailVehicleController::class, 'vehicle_by_id']);
+// Route::get('edit_quota_vehicles/{id}', [DetailVehicleController::class, 'vehicle_by_id']);
+
 
 Route::get('detail_users', [DetailUserController::class, 'index']);
 Route::post('detail_users', [DetailUserController::class, 'store']);
 Route::put('detail_users/{id}', [DetailUserController::class, 'edit']);
+Route::get('detail_users/{id}', [DetailUserController::class, 'get_data_by_id']);
 
 Route::get('request_quota', [RequestQuotaController::class, 'index']);
 Route::post('request_quota', [RequestQuotaController::class, 'store']);

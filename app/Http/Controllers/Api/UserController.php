@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(){
         $user = User::with(['role'])->paginate();
-        return response()->json([$user],200);
+        return response()->json($user,200);
     }
     public function store(Request $request)
     {

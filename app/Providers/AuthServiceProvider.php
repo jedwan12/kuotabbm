@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
             'operator_spbu' => 'Read Only',
             'pejabat' => 'Read Only',
             'pegawai' => 'Read Only',
+            'guest' => 'non role'
 
         ]);
         Passport::setDefaultScope([

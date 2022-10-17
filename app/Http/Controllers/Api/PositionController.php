@@ -12,7 +12,7 @@ class PositionController extends Controller
     //
     public function index(){
         $position = Position::all();
-        return response()->json([$position],200);
+        return response()->json($position,200);
     }
     public function store(Request $request)
     {

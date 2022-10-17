@@ -12,7 +12,7 @@ class VehicleTypeController extends Controller
     //
     public function index(){
         $vehicle_type = VehicleType::all();
-        return response()->json([$vehicle_type],200);
+        return response()->json($vehicle_type,200);
     }
     public function store(Request $request)
     {

@@ -20,8 +20,8 @@ class RequestQuotaController extends Controller
         try{
         $rules = [
             'total_request' => 'required',
-            'approval1' => '',
-            'approval2' => '',
+            // 'approval1' => '',
+            // 'approval2' => '',
             'detail_vehicle_id' => 'required',
             'user_id' => 'required',
 
@@ -32,13 +32,10 @@ class RequestQuotaController extends Controller
         $this->validate($request, $rules, $messages);
         $request_quota = new RequestQuota;
         $request_quota->total_request = $request->total_request;
-        $request_quota->approval1 = $request->approval1;
-        $request_quota->approval2 = $request->approval2;
+        $request_quota->approval1 = NULL;
+        $request_quota->approval2 = NULL;
         $request_quota->detail_vehicle_id = $request->detail_vehicle_id;
         $request_quota->user_id = $request->user_id;
-
-
-
         $request_quota->save();
         return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
     } catch (Exception $e) {
