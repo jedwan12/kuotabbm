@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('is_ldap');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
-
+            $table->string('updated_by', 255 )->nullable();
             // $table->rememberToken();
             $table->enum('status', ['active', 'deleted'])->default('active');
             $table->timestamps();

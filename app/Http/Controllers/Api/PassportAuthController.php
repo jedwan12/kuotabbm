@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 // use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Adldap\Laravel\Facades\Adldap;
 
 
@@ -80,12 +81,12 @@ class PassportAuthController extends Controller
 
         $databaseMail = User::with(['role'])->where('email', $ldap->mail[0])->where('is_ldap', 1);
         if (count($databaseMail->get()) > 0 && $databaseMail->first()->is_active == 1) {
-            $token = $databaseMail->first()->createToken('PerpusAccess', [$databaseMail->first()->role->role_name])->accessToken;
+            $token = $databaseMail->first()->createToken('PerpusAccess', [$databaseMail->first()->role->name])->accessToken;
             return response()->json(['token' => $token, "user" => $databaseMail->first()], 200);
         } else if (count($databaseMail->get()) > 0 && $databaseMail->first()->is_active == 0) {
             return response()->json(['Error' => 'Account inactive please contact admin'], 403);
         }else{
-            $role = Role::where('role_name','guest')->first();
+            $role = Role::where('name','guest')->first();
             $user = User::create([
                 'name' => $ldap->givenname[0],
                 'username' => $ldap->samaccountname[0],
@@ -95,7 +96,7 @@ class PassportAuthController extends Controller
                 'is_ldap' => 1,
                 'role_id' => $role->id
             ]);
-            $token = $user->createToken('PerpusAccess', [$role->role_name])->accessToken;
+            $token = $user->createToken('PerpusAccess', [$role->name])->accessToken;
             return response()->json(['token' => $token, "user" => $user], 200);
         }
     }
@@ -103,8 +104,8 @@ class PassportAuthController extends Controller
     {
         try {
             if (auth()->user()->is_active == 1) {
-                $token = auth()->user()->createToken('PerpusAccess', ['admin'])->accessToken;
-                $data = auth()->user();
+                $token = auth()->user()->createToken('PerpusAccess', ['guest'])->accessToken;
+                $data =  User::with(['role'])->find(auth()->user()->id);
                 return response()->json(['token' => $token, "user" => $data], 200);
             } else if (auth()->user()->is_active == 0) {
                 return response()->json(['Error' => 'Account inactive please contact admin'], 403);

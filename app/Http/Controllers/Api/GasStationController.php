@@ -12,7 +12,7 @@ class GasStationController extends Controller
     //
     public function index(){
         $gas_station = GasStation::all();
-        return response()->json([$gas_station],200);
+        return response()->json($gas_station,200);
     }
     public function store(Request $request)
     {

@@ -12,9 +12,10 @@ class RequestQuotaController extends Controller
 {
     //
     public function index(){
-        $request_quota = RequestQuota::with(['user','detail_vehicle', 'detail_vehicle.petrol' ,'detail_vehicle.business_unit'])->paginate();
+        $request_quota = RequestQuota::with(['user','detail_vehicle', 'detail_vehicle.petrol' ,'detail_vehicle.business_unit'])->latest()->paginate(10);
         return response()->json($request_quota,200);
     }
+
     public function store(Request $request)
     {
         try{
@@ -74,5 +75,38 @@ class RequestQuotaController extends Controller
     }
 
 }
+
+    public function approval1($status, $id)
+    {
+        try{
+        $request_quota = RequestQuota::find($id);
+        $request_quota->approval1 = $status;
+
+        $request_quota->save();
+        return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
+    } catch (Exception $e) {
+        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+    }
+
+}
+
+    public function approval2($status, $id)
+    {
+        try{
+        $request_quota = RequestQuota::find($id);
+        $request_quota->approval2 = $status;
+
+        $request_quota->save();
+        return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
+    } catch (Exception $e) {
+        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+    }
+
+}
+
+    public function request_quota_by_id($id){
+        $request_quota = RequestQuota::with(['detail_vehicle','user', 'detail_vehicle.petrol', 'detail_vehicle.business_unit'])->where('user_id',$id)->paginate();
+        return response()->json($request_quota,200);
+    }
 
 }

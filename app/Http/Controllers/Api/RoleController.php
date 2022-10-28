@@ -12,7 +12,7 @@ class RoleController extends Controller
     //
     public function index(){
         $role = Role::all();
-        return response()->json([$role],200);
+        return response()->json($role,200);
     }
     public function store(Request $request)
     {

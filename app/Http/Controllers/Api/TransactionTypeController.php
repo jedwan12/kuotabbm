@@ -12,7 +12,7 @@ class TransactionTypeController extends Controller
     //
     public function index(){
         $transaction_type = TransactionType::all();
-        return response()->json([$transaction_type],200);
+        return response()->json($transaction_type,200);
     }
     public function store(Request $request)
     {

@@ -52,6 +52,9 @@ Route::post('detail_vehicles', [DetailVehicleController::class, 'store']);
 Route::put('detail_vehicles/{id}', [DetailVehicleController::class, 'edit']);
 Route::get('detail_vehicles/{id}', [DetailVehicleController::class, 'get_data_by_id']);
 Route::get('list_detail_vehicles/{id}', [DetailVehicleController::class, 'vehicle_by_id']);
+Route::get('form_request/{id}', [DetailVehicleController::class, 'vehicle_by_id']);
+
+// Route::get('plat_vehicles/{id}', [DetailVehicleController::class, 'plat_by_id']);
 // Route::get('edit_quota_vehicles/{id}', [DetailVehicleController::class, 'vehicle_by_id']);
 
 
@@ -63,10 +66,15 @@ Route::get('detail_users/{id}', [DetailUserController::class, 'get_data_by_id'])
 Route::get('request_quota', [RequestQuotaController::class, 'index']);
 Route::post('request_quota', [RequestQuotaController::class, 'store']);
 Route::put('request_quota/{id}', [RequestQuotaController::class, 'edit']);
+Route::get('request_quota_pegawai/{id}', [RequestQuotaController::class, 'request_quota_by_id']);
+Route::get('request_quota/approval1/{status}/{id}', [RequestQuotaController::class, 'approval1']);
+Route::get('request_quota/approval2/{status}/{id}', [RequestQuotaController::class, 'approval2']);
+
 
 Route::get('users', [UserController::class, 'index']);
 Route::post('users', [UserController::class, 'store']);
 Route::put('users/{id}', [UserController::class, 'edit']);
+Route::get('users/{id}', [UserController::class, 'get_data_by_id']);
 
 Route::get('roles', [RoleController::class, 'index']);
 Route::post('roles', [RoleController::class, 'store']);

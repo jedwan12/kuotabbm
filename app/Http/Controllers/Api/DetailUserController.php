@@ -40,6 +40,7 @@ class DetailUserController extends Controller
         // return response()->json($role,200);
         $user = new User;
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->password = bcrypt('12345678');
         $user->is_active = 1;

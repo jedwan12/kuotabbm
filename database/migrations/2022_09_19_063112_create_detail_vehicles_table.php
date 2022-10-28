@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('car_name', 255);
             $table->unsignedBigInteger('vehicle_type_id')->nullable();
             $table->foreign('vehicle_type_id')->references('id')->on('vehicle_types');
-            $table->string('plat_number', 20);
+            $table->string('plat_number', 20)->unique();
             $table->unsignedBigInteger('business_unit_id')->nullable();
             $table->foreign('business_unit_id')->references('id')->on('business_units');
             $table->unsignedBigInteger('petrol_id')->nullable();
