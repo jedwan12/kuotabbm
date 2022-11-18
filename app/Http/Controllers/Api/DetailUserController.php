@@ -15,8 +15,7 @@ class DetailUserController extends Controller
 {
     //
     public function index(){
-        $detail_user = DetailUser::with(['position','business_unit', 'user'])
-        ->addSelect(['totalquota' => DetailVehicle::selectRaw('coalesce(sum(quota),0) as total')->whereRaw('user_id = detail_users.user_id')])->paginate();
+        $detail_user = DetailUser::with(['position','business_unit', 'user'])->where('status','active')->paginate();
         return response()->json($detail_user,200);
     }
 
@@ -115,6 +114,20 @@ class DetailUserController extends Controller
 public function get_data_by_id($id){
     $detail_user= DetailUser::with(['user'])->find($id);
     return response()->json(["data" => $detail_user, "message" => "Ok"], 200);
+}
+
+public function delete($id)
+    {
+        try{
+        $detail_user = DetailUser::find($id);
+        $detail_user->status = 'deleted';
+
+        $detail_user->save();
+        return response()->json(["data" => $detail_user, "message" => "Ok"], 200);
+    } catch (Exception $e) {
+        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+    }
+
 }
 
 

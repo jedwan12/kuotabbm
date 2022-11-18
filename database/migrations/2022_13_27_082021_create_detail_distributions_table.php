@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('detail_distributions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaction_type_id')->nullable();
-            $table->foreign('transaction_type_id')->references('id')->on('transaction_types');
-            $table->double('quota');
-            $table->unsignedBigInteger('gas_station_id')->nullable();
-            $table->foreign('gas_station_id')->references('id')->on('gas_stations');
             $table->unsignedBigInteger('detail_vehicle_id')->nullable();
             $table->foreign('detail_vehicle_id')->references('id')->on('detail_vehicles');
+            $table->unsignedBigInteger('distribution_id')->nullable();
+            $table->foreign('distribution_id')->references('id')->on('distributions');
+            $table->enum('status', ['active', 'deleted'])->default('active');
+            $table->double('quota');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('detail_distributions');
     }
 };

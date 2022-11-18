@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('qr', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('detail_vehicle_id')->nullable();
-            $table->foreign('detail_vehicle_id')->references('id')->on('detail_vehicles');
+            $table->unsignedBigInteger('detail_distribution_id')->nullable();
+            $table->foreign('detail_distribution_id')->references('id')->on('detail_distributions');
+            $table->date('expired');
             $table->timestamps();
         });
     }

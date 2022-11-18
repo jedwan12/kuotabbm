@@ -10,7 +10,21 @@ class LogController extends Controller
 {
     //
     public function index(){
-        $log = Log::with(['detail_vehicle','gas_station','transaction_type', 'detail_vehicle.petrol', 'detail_vehicle.user'])->paginate();
+        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->paginate();
+        return response()->json($log,200);
+    }
+    public function index_request(){
+        $log = Log::with(['detail_distribution', 'detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',2)->paginate();
+        return response()->json($log,200);
+    }
+
+    public function index_management(){
+        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',1 )->paginate();
+        return response()->json($log,200);
+    }
+
+    public function index_transaction(){
+        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',3 )->paginate();
         return response()->json($log,200);
     }
 
@@ -18,10 +32,11 @@ class LogController extends Controller
     {
         try{
         $rules = [
-            'transaction_type_id' => 'required',
             'quota' => 'required',
             'gas_station_id' => '',
-            'detail_vehicle_id' => 'required',
+            'detail_distribution_id' => 'required',
+            'note' => '',
+            // 'updated_by' => 'required',
 
         ];
         $messages = array(
@@ -29,10 +44,11 @@ class LogController extends Controller
         );
         $this->validate($request, $rules, $messages);
         $log = new Log;
-        $log->transaction_type_id = $request->transaction_type_id;
+        $log->transaction_type_id = 1;
+        $log->management_type_id = 3;
         $log->quota = $request->quota;
         $log->gas_station_id = $request->gas_station_id ?? NULL;
-        $log->detail_vehicle_id = $request->detail_vehicle_id;
+        $log->detail_distribution_id = $request->detail_distribution_id;
 
         $log->save();
         return response()->json(["data" => $log, "message" => "Ok"], 200);

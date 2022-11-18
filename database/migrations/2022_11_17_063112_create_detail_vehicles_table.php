@@ -25,7 +25,6 @@ return new class extends Migration
             $table->foreign('petrol_id')->references('id')->on('petrols');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->double('quota');
             $table->enum('status', ['active', 'deleted'])->default('active');
             $table->timestamps();
         });

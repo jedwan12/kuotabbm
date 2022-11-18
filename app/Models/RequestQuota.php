@@ -11,16 +11,22 @@ class RequestQuota extends Model
     protected $table = 'request_quota';
     protected $fillable = [
         'total_request',
-        'approval1',
-        'approval2',
+        'approval',
+        'note',
         'user_id',
-        'detail_vehicle_id',
+        'detail_distribution_id'
+        // 'detail_vehicle_id',
     ];
 
-    public function detail_vehicle()
-        {
-            return $this->belongsTo(DetailVehicle::class);
-        }
+    public function detail_distribution()
+    {
+        return $this->belongsTo(DetailDistribution::class);
+    }
+
+    // public function detail_vehicle()
+    //     {
+    //         return $this->belongsTo(DetailVehicle::class);
+    //     }
 
     public function user()
         {

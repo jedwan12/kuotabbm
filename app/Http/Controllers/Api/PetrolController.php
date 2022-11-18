@@ -11,7 +11,7 @@ class PetrolController extends Controller
 {
     //
     public function index(){
-        $petrol = Petrol::all();
+        $petrol = Petrol::all()->where('status','active');
         return response()->json($petrol,200);
     }
     public function store(Request $request)
@@ -59,5 +59,23 @@ class PetrolController extends Controller
 
 }
 
+public function get_data_by_id($id){
+    $petrol= Petrol::find($id);
+    return response()->json(["data" => $petrol, "message" => "Ok"], 200);
+}
+
+public function delete($id)
+    {
+        try{
+        $petrol = Petrol::find($id);
+        $petrol->status = 'deleted';
+
+        $petrol->save();
+        return response()->json(["data" => $petrol, "message" => "Ok"], 200);
+    } catch (Exception $e) {
+        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+    }
+
+}
 
 }

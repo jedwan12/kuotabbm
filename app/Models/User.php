@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'is_active',
         'is_ldap',
-        'role_id'
+        'role_id',
+        'updated_by'
     ];
 
     /**

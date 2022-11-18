@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('request_quota', function (Blueprint $table) {
             $table->id();
             $table->double('total_request');
-            $table->boolean('approval1')->nullable();
-            $table->boolean('approval2')->nullable();
-            $table->unsignedBigInteger('detail_vehicle_id')->nullable();
-            $table->foreign('detail_vehicle_id')->references('id')->on('detail_vehicles');
+            $table->boolean('is_approval')->nullable();
+            $table->unsignedBigInteger('detail_distribution_id')->nullable();
+            $table->foreign('detail_distribution_id')->references('id')->on('detail_distributions');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('note', 255)->nullable();
             $table->enum('status', ['active', 'deleted'])->default('active');
+            $table->string('updated_by', 255 )->nullable();
             $table->timestamps();
         });
     }

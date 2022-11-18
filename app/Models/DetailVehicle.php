@@ -14,7 +14,7 @@ class DetailVehicle extends Model
         'plat_number',
         'business_unit_id',
         'petrol_id',
-        'quota',
+        // 'quota',
         'user_id',
     ];
     public function petrol()
@@ -32,6 +32,11 @@ class DetailVehicle extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function detail_user()
+    {
+        return $this->hasOne(DetailUser::class,'user_id','user_id');
+    }
+
     public function business_unit()
     {
         return $this->belongsTo(BusinessUnit::class);
@@ -47,9 +52,15 @@ class DetailVehicle extends Model
             return $this->hasMany(Log::class);
         }
 
-    public function request_quota()
+    public function detail_distribution()
         {
-            return $this->hasMany(RequestQuota::class);
+            return $this->hasMany(hasOne::class);
         }
+    
+
+    // public function request_quota()
+    //     {
+    //         return $this->hasMany(RequestQuota::class);
+    //     }
 
 }

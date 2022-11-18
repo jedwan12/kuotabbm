@@ -94,7 +94,9 @@ class PassportAuthController extends Controller
                 'password' => bcrypt(12345678),
                 'is_active' => 1,
                 'is_ldap' => 1,
-                'role_id' => $role->id
+                'role_id' => $role->id,
+                'updated_by' => $role->updated_by
+
             ]);
             $token = $user->createToken('PerpusAccess', [$role->name])->accessToken;
             return response()->json(['token' => $token, "user" => $user], 200);

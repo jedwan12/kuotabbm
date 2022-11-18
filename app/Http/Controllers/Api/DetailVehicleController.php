@@ -11,7 +11,7 @@ class DetailVehicleController extends Controller
 {
     //
     public function index(){
-        $detail_vehicle = DetailVehicle::with(['vehicle_type','user','business_unit', 'petrol'])->paginate();
+        $detail_vehicle = DetailVehicle::with(['vehicle_type','user','business_unit', 'petrol'])->where('status','active')->paginate();
         return response()->json($detail_vehicle,200);
     }
     public function store(Request $request)
@@ -39,7 +39,7 @@ class DetailVehicleController extends Controller
         $detail_vehicle->business_unit_id = $request->business_unit_id;
         $detail_vehicle->petrol_id = $request->petrol_id;
         $detail_vehicle->user_id = $request->user_id;
-        $detail_vehicle->quota = $request->quota ?? NULL;
+        // $detail_vehicle->quota = $request->quota ?? NULL;
 
 
         $detail_vehicle->save();
@@ -74,7 +74,7 @@ class DetailVehicleController extends Controller
             $detail_vehicle->business_unit_id = $request->business_unit_id ?? $detail_vehicle->business_unit_id;
             $detail_vehicle->petrol_id = $request->petrol_id ?? $detail_vehicle->petrol_id;
             $detail_vehicle->user_id = $request->user_id  ?? $detail_vehicle->user_id;
-            $detail_vehicle->quota = $request->quota  ?? $detail_vehicle->quota;
+            // $detail_vehicle->quota = $request->quota  ?? $detail_vehicle->quota;
 
 
             $detail_vehicle->save();
@@ -90,12 +90,23 @@ class DetailVehicleController extends Controller
     }
 
     public function vehicle_by_id($id){
-        $detail_vehicle = DetailVehicle::with(['vehicle_type','user','business_unit', 'petrol'])->where('user_id',$id)->paginate();
+        $detail_vehicle = DetailVehicle::with(['detail_user','vehicle_type','user','business_unit', 'petrol'])->where('user_id',$id)->paginate();
         return response()->json($detail_vehicle,200);
     }
 
-    // public function plat_by_id($id){
-    //     $detail_vehicle = DetailVehicle::with([])->where('user_id',$id)->paginate();
-    //     return response()->json($detail_vehicle,200);
-    // }
+
+    public function delete($id)
+    {
+        try{
+        $detail_vehicle = DetailVehicle::find($id);
+        $detail_vehicle->status = 'deleted';
+
+        $detail_vehicle->save();
+        return response()->json(["data" => $detail_vehicle, "message" => "Ok"], 200);
+    } catch (Exception $e) {
+        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+    }
+
+}
+
 }
