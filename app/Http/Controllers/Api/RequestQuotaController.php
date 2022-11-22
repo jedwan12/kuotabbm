@@ -24,6 +24,7 @@ class RequestQuotaController extends Controller
         try{
         $rules = [
             'total_request' => 'required',
+            'reason_request' => 'required',
             // 'is_approval1' => '',
             // 'is_approval2' => '',
 
@@ -38,14 +39,12 @@ class RequestQuotaController extends Controller
         $request_quota = new RequestQuota;
         $request_quota->total_request = $request->total_request;
         $request_quota->is_approval = NULL;
-        $request_quota->note = $request->note;
-        // $request_quota->is_approval2 = NULL;
+        $request_quota->reason_request = $request->reason_request;
         $request_quota->detail_distribution_id = $request->detail_distribution_id;
-        // $request_quota->user_id = $request->user_id;
         $request_quota->save();
         return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
     } catch (Exception $e) {
-        return response()->json(["message" => $e, 'code' => $e->getCode()], 403);
+        return response()->json(["message" => $e->getMessage() , 'code' => $e->getCode()], 403);
     }
 
 }
@@ -120,7 +119,7 @@ class RequestQuotaController extends Controller
         $request_quota = RequestQuota::find($id);
 
         $request_quota->is_approval = 0;
-        $request_quota->note = $request->note;
+        $request_quota->reason_reject = $request->reason_reject;
         // $request_quota->total_request = $request->total_request;
         $request_quota->save();
         return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
@@ -144,7 +143,7 @@ class RequestQuotaController extends Controller
 // }
 
     public function request_quota_by_id($id){
-        $request_quota = RequestQuota::with(['detail_vehicle','user', 'detail_vehicle.petrol', 'detail_vehicle.business_unit'])->where('user_id',$id)->paginate();
+        $request_quota = RequestQuota::with(['detail_distribution.detail_vehicle','detail_distribution.detail_vehicle.user', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit'])->where('user_id',$id)->paginate();
         return response()->json($request_quota,200);
     }
 

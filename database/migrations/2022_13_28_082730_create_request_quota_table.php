@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreign('detail_distribution_id')->references('id')->on('detail_distributions');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('note', 255)->nullable();
+            $table->string('reason_request', 255)->nullable();
+            $table->string('reason_reject', 255)->nullable();
             $table->enum('status', ['active', 'deleted'])->default('active');
             $table->string('updated_by', 255 )->nullable();
             $table->timestamps();

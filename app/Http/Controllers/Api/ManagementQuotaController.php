@@ -89,7 +89,8 @@ class ManagementQuotaController extends Controller
             'required' => 'The :attribute field is required.',
         );
         $this->validate($request, $rules, $messages);
-        $management_quota = ManagementQuota::find($id);
+        $management_quota = new ManagementQuota;
+        // return response()->json(["data" => $management_quota, "message" => "Ok"], 200);
         $management_quota->quota = $request->quota;
         // $management_quota->gas_station_id = $request->gas_station_id ?? NULL;
         $management_quota->detail_distribution_id = $request->detail_distribution_id;
