@@ -34,6 +34,8 @@ use App\Http\Controllers\Api\RequestQuotaController;
 
 use App\Http\Controllers\Api\RoleController;
 
+use App\Http\Controllers\Api\TransactionController;
+
 use App\Http\Controllers\Api\TransactionTypeController;
 
 use App\Http\Controllers\Api\UserController;
@@ -81,7 +83,8 @@ Route::get('detail_users/delete/{id}', [DetailUserController::class, 'delete']);
 Route::get('request_quota', [RequestQuotaController::class, 'index']);
 Route::post('request_quota', [RequestQuotaController::class, 'store']);
 Route::put('request_quota/{id}', [RequestQuotaController::class, 'edit']);
-Route::get('request_quota_pegawai/{id}', [RequestQuotaController::class, 'request_quota_by_id']);
+Route::get('request_quota_pegawai/{id}', [RequestQuotaController::class, 'request_quota_by_user_id']);
+Route::get('request_quota_pegawai/detail/{id}', [RequestQuotaController::class, 'request_quota_by_id']);
 Route::get('request_quota/approval/{status}/{id}', [RequestQuotaController::class, 'approval']);
 Route::post('request_quota/reject/{id}', [RequestQuotaController::class, 'reject']);
 // Route::get('request_quota/approval2/{status}/{id}', [RequestQuotaController::class, 'approval2']);
@@ -151,9 +154,14 @@ Route::put('management_quotas/reduce_quota/{id}', [ManagementQuotaController::cl
 
 Route::get('qr', [QRController::class, 'index']);
 Route::post('qr', [QRController::class, 'generate_qr']);
-Route::get('qr/{id}', [QRController::class, 'get_data_by_id']);
+Route::get('qr/{id}', [QRController::class, 'get_qr_by_id']);
 Route::get('qr/delete/{id}', [QRController::class, 'delete']);
 
+Route::get('transactions', [TransactionController::class, 'index']);
+Route::post('transactions', [TransactionController::class, 'store']);
+Route::get('transactions/{id}', [TransactionController::class, 'get_data_by_id']);
+Route::get('transactions/confirmed/accept/{id}', [TransactionController::class, 'confirmed']);
+Route::get('transactions/rejected/rejected/{id}', [TransactionController::class, 'rejected']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

@@ -15,7 +15,7 @@ class RequestQuotaController extends Controller
 {
     //
     public function index(){
-        $request_quota = RequestQuota::with(['detail_distribution', 'detail_distribution.detail_vehicle.user' ,'detail_distribution.detail_vehicle', 'detail_distribution.detail_vehicle.petrol' ,'detail_distribution.detail_vehicle.business_unit'])->latest()->paginate(10);
+        $request_quota = RequestQuota::with(['detail_distribution', 'detail_distribution.detail_vehicle.user' ,'detail_distribution.detail_vehicle', 'detail_distribution.detail_vehicle.petrol' ,'detail_distribution.detail_vehicle.business_unit'])->latest()->paginate(5, ['*'],'page',request('page'));
         return response()->json($request_quota,200);
     }
 
@@ -40,6 +40,7 @@ class RequestQuotaController extends Controller
         $request_quota->total_request = $request->total_request;
         $request_quota->is_approval = NULL;
         $request_quota->reason_request = $request->reason_request;
+        $request_quota->user_id = $request->user_id;
         $request_quota->detail_distribution_id = $request->detail_distribution_id;
         $request_quota->save();
         return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
@@ -142,9 +143,14 @@ class RequestQuotaController extends Controller
 
 // }
 
-    public function request_quota_by_id($id){
-        $request_quota = RequestQuota::with(['detail_distribution.detail_vehicle','detail_distribution.detail_vehicle.user', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit'])->where('user_id',$id)->paginate();
+    public function request_quota_by_user_id($id){
+        $request_quota = RequestQuota::with(['detail_distribution', 'detail_distribution.detail_vehicle','detail_distribution.detail_vehicle.user', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit'])->where('user_id',$id)->paginate();
         return response()->json($request_quota,200);
+    }
+
+    public function request_quota_by_id($id){
+        $request_quota = RequestQuota::with(['detail_distribution', 'detail_distribution.detail_vehicle','detail_distribution.detail_vehicle.user', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit'])->find($id);
+        return response()->json(["data" => $request_quota, "message" => "Ok"], 200);
     }
 
 }

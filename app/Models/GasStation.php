@@ -18,4 +18,12 @@ class GasStation extends Model
     {
         return $this->hasMany(Log::class);
     }
+    public function transaction()
+        {
+            return $this->hasOne(Transaction::class);
+        }
+    public function user()
+        {
+            return $this->hasOne(User::class);
+        }
 }

@@ -63,7 +63,8 @@ class DetailDistributionController extends Controller
     }
 
     public function get_data_by_id($id){
-        $detail_distribution= DetailDistribution::find($id);
+        $detail_distribution= DetailDistribution::with(['distribution','detail_vehicle', 'detail_vehicle.detail_user', 'detail_vehicle.detail_user.position',
+        'detail_vehicle.detail_user.business_unit', 'detail_vehicle.vehicle_type' ,'detail_vehicle.business_unit', 'detail_vehicle.petrol', 'detail_vehicle.user'])->find($id);
         return response()->json(["data" => $detail_distribution, "message" => "Ok"], 200);
     }
 

@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('reason_request', 255)->nullable();
             $table->string('reason_reject', 255)->nullable();
             $table->enum('status', ['active', 'deleted'])->default('active');
-            $table->string('updated_by', 255 )->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

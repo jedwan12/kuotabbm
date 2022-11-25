@@ -11,7 +11,7 @@ class GasStationController extends Controller
 {
     //
     public function index(){
-        $gas_station = GasStation::all()->where('status','active');
+        $gas_station = GasStation::where('status','active')->paginate(5, ['*'],'page',request('page'));;
         return response()->json($gas_station,200);
     }
     public function store(Request $request)

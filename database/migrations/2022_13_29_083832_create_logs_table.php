@@ -25,7 +25,8 @@ return new class extends Migration
             $table->foreign('gas_station_id')->references('id')->on('gas_stations');
             $table->unsignedBigInteger('detail_distribution_id')->nullable();
             $table->foreign('detail_distribution_id')->references('id')->on('detail_distributions');
-            $table->string('updated_by', 255 )->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class PetrolController extends Controller
 {
     //
     public function index(){
-        $petrol = Petrol::all()->where('status','active');
+        $petrol = Petrol::where('status','active')->paginate(5, ['*'],'page',request('page'));
         return response()->json($petrol,200);
     }
     public function store(Request $request)

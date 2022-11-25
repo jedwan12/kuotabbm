@@ -11,7 +11,7 @@ class BusinessUnitController extends Controller
 {
     //
     public function index(){
-        $business_unit = BusinessUnit::all()->where('status','active');
+        $business_unit = BusinessUnit::where('status','active')->paginate(5, ['*'],'page',request('page'));
         return response()->json($business_unit,200);
     }
     public function store(Request $request)

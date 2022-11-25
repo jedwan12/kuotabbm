@@ -17,5 +17,9 @@ class Petrol extends Model
     {
         return $this->hasMany(DetailVehicle::class);
     }
+    public function transaction()
+        {
+            return $this->hasOne(Transaction::class);
+        }
 }
 

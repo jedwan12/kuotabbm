@@ -11,7 +11,7 @@ class DetailVehicleController extends Controller
 {
     //
     public function index(){
-        $detail_vehicle = DetailVehicle::with(['vehicle_type','user','business_unit', 'petrol'])->where('status','active')->paginate();
+        $detail_vehicle = DetailVehicle::with(['vehicle_type','user','business_unit', 'petrol'])->where('status','active')->paginate(5, ['*'],'page',request('page'));
         return response()->json($detail_vehicle,200);
     }
     public function store(Request $request)

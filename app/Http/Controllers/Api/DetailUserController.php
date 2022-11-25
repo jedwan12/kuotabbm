@@ -15,7 +15,7 @@ class DetailUserController extends Controller
 {
     //
     public function index(){
-        $detail_user = DetailUser::with(['position','business_unit', 'user'])->where('status','active')->paginate();
+        $detail_user = DetailUser::with(['position','business_unit', 'user'])->where('status','active')->paginate(5, ['*'],'page',request('page'));
         return response()->json($detail_user,200);
     }
 

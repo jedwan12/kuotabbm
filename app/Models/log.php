@@ -39,6 +39,11 @@ class Log extends Model
             return $this->belongsTo(DetailDistribution::class);
         }
 
+    public function transaction()
+        {
+            return $this->hasOne(Transaction::class);
+        }
+
     // public function detail_vehicle()
     //     {
     //         return $this->belongsTo(DetailVehicle::class);

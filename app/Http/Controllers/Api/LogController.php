@@ -10,16 +10,16 @@ class LogController extends Controller
 {
     //
     public function index(){
-        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->paginate();
+        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->paginate(5, ['*'],'page',request('page'));
         return response()->json($log,200);
     }
     public function index_request(){
-        $log = Log::with(['detail_distribution', 'detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',2)->paginate();
+        $log = Log::with(['detail_distribution', 'detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',2)->paginate(5, ['*'],'page',request('page'));
         return response()->json($log,200);
     }
 
     public function index_management(){
-        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',1 )->paginate();
+        $log = Log::with(['detail_distribution','detail_distribution.detail_vehicle','gas_station','transaction_type', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.user'])->where('management_type_id',1 )->paginate(5, ['*'],'page',request('page'));
         return response()->json($log,200);
     }
 

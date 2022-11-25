@@ -36,6 +36,7 @@ class UserController extends Controller
         $user->is_active = 1;
         $user->is_ldap = 0;
         $user->role_id = $request->role_id;
+        $user->gas_station_id = $request->gas_station_id ?? NULL;
         $user->updated_by = Null;
 
         $user->save();
@@ -71,6 +72,7 @@ class UserController extends Controller
         $user->is_active = $request->is_active;
         $user->is_ldap = $request->is_ldap;
         $user->role_id = $request->role_id;
+        $user->gas_station_id = $request->gas_station_id ?? NULL;
         $user->updated_by = $request->updated_by;
 
         $user->save();

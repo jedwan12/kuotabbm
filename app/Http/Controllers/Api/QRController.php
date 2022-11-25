@@ -42,8 +42,9 @@ class QRController extends Controller
 
 }
 
-    public function get_data_by_id($id){
-        $qr= QR::find($id);
+    public function get_qr_by_id($id){
+        $qr= QR::with(['detail_distribution','detail_distribution.detail_vehicle', 'detail_distribution.detail_vehicle.detail_user', 'detail_distribution.detail_vehicle.detail_user.position',
+        'detail_distribution.detail_vehicle.detail_user.business_unit', 'detail_distribution.detail_vehicle.vehicle_type' ,'detail_distribution.detail_vehicle.business_unit', 'detail_distribution.detail_vehicle.petrol', 'detail_distribution.detail_vehicle.user'])->find($id);
         return response()->json(["data" => $qr, "message" => "Ok"], 200);
     }
 

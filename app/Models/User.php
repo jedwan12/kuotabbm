@@ -67,6 +67,11 @@ class User extends Authenticatable
             return $this->hasOne(DetailVehicle::class);
         }
 
+    public function gasstation()
+        {
+            return $this->hasOne(GasStation::class);
+        }
+
     public function role()
         {
             return $this->belongsTo(Role::class);
